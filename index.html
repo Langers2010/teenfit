@@ -1,0 +1,79 @@
+<!DOCTYPE html><html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Teen Fit App</title>
+  <style>
+    body { font-family: Arial, sans-serif; background:#f4f6f8; margin:0; padding:20px; }
+    h1 { text-align:center; }
+    .card { background:white; border-radius:14px; padding:16px; margin-bottom:16px; box-shadow:0 4px 10px rgba(0,0,0,0.1); }
+    button { padding:10px 14px; border:none; border-radius:8px; background:#2563eb; color:white; font-weight:bold; cursor:pointer; margin-top:6px; }
+    input, select { padding:8px; width:100%; margin:6px 0; }
+    label { font-weight:bold; }
+    .small { color:#555; font-size:14px; }
+    .check { margin-right:6px; }
+  </style>
+</head>
+<body><h1>🏃 Teen Fit App 💪</h1><div class="card">
+  <h2>📅 Today's Workout</h2>
+  <label><input type="checkbox" class="check"> Running Session</label><br>
+  <label><input type="checkbox" class="check"> Strength Training</label><br>
+  <label><input type="checkbox" class="check"> Stretching</label><br>
+</div><div class="card">
+  <h2>🔥 Daily Calorie Calculator</h2>
+  <label>Weight (kg)</label>
+  <input id="weight" type="number" /><label>Height (cm)</label> <input id="height" type="number" />
+
+<label>Activity Level</label> <select id="activity"> <option value="1.4">Light</option> <option value="1.6">Moderate</option> <option value="1.8">Very Active</option> </select>
+
+<button onclick="calculateCalories()">Calculate</button>
+
+  <p id="result"></p>
+</div><div class="card">
+  <h2>🥗 Meal Calorie Tracker</h2>
+  <input id="meal" placeholder="Meal name" />
+  <input id="mealCalories" type="number" placeholder="Calories" />
+  <button onclick="addMeal()">Add Meal</button>
+  <ul id="mealList"></ul>
+  <p><b>Total eaten:</b> <span id="totalCalories">0</span> kcal</p>
+</div><div class="card">
+  <h2>📈 Progress Tracker</h2>
+  <input id="progressWeight" type="number" placeholder="Today's weight (kg)" />
+  <button onclick="saveWeight()">Save</button>
+  <p id="weightLog"></p>
+</div><div class="card">
+  <h2>🌙 Daily Habits</h2>
+  <label><input type="checkbox"> Drank enough water</label><br>
+  <label><input type="checkbox"> Slept 7–9 hours</label><br>
+  <label><input type="checkbox"> Ate protein</label>
+</div><script>
+let total = 0;
+
+function calculateCalories() {
+  const w = weight.value;
+  const h = height.value;
+  const a = activity.value;
+  if (!w || !h) return;
+  let bmr = (10 * w) + (6.25 * h) - (5 * 15) + 5;
+  result.innerText = `Estimated daily calories: ${Math.round(bmr * a)} kcal`;
+}
+
+function addMeal() {
+  const name = meal.value;
+  const cal = Number(mealCalories.value);
+  if (!name || !cal) return;
+  total += cal;
+  totalCalories.innerText = total;
+  const li = document.createElement('li');
+  li.innerText = `${name} - ${cal} kcal`;
+  mealList.appendChild(li);
+  meal.value = ''; mealCalories.value = '';
+}
+
+function saveWeight() {
+  const w = progressWeight.value;
+  if (!w) return;
+  weightLog.innerText = `Last saved weight: ${w} kg`;
+}
+</script></body>
+  </html>
